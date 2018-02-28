@@ -1,4 +1,4 @@
-package EXERCISE7;
+package EXERCISE7NotFinished;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -24,23 +24,28 @@ public class DatagramTimeServer {
         byte[] buf = new byte[256];
         try {
             DatagramPacket packet = new DatagramPacket(buf, buf.length);
-            socket.receive(packet);
-
-            String dString = new Date().toString();
-            buf = dString.getBytes();
-            InetAddress address = packet.getAddress();
-            int port = packet.getPort();
-            packet = new DatagramPacket(buf, buf.length, address, port);
-            socket.send(packet);
+            while(true){
+                socket.receive(packet);
+                String dString = new Date().toString();
+                buf = dString.getBytes();
+                InetAddress address = packet.getAddress();
+                int port = packet.getPort();
+                packet = new DatagramPacket(buf, buf.length, address, port);
+                socket.send(packet);
+            }
 
         } catch (IOException ex) {
             Logger.getLogger(DatagramTimeServer.class.getName()).log(Level.SEVERE, null, ex);
         }
-        socket.close();
+        //socket.close();
     }
 
     public static void main(String[] args){
         DatagramTimeServer ds = new DatagramTimeServer();
-        ds.startServer();
+        while(true){
+            ds.startServer();
+        }
+        
+        
     }
 }
