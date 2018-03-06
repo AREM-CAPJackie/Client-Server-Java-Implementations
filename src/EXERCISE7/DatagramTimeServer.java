@@ -1,4 +1,4 @@
-package EXERCISE7NotFinished;
+package EXERCISE7;
 
 import java.io.IOException;
 import java.net.DatagramPacket;

@@ -1,5 +1,5 @@
 
-package EXERCISE7NotFinished;
+package EXERCISE7;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -15,6 +15,7 @@ public class DatagramTimeClient {
     public static void main(String[] args){
         byte[] sendBuf = new byte[256];
         try {
+            String received =null;
             while(true){
                 DatagramSocket socket = new DatagramSocket();
                 byte[] buf = new byte[256];
@@ -22,20 +23,20 @@ public class DatagramTimeClient {
                 DatagramPacket packet = new DatagramPacket(buf, buf.length, address, 4445);
                 socket.send(packet);       
                 packet = new DatagramPacket(buf, buf.length);   
-                socket.setSoTimeout(5000);
+                socket.setSoTimeout(1000);
                 try{
                     socket.receive(packet);
+                    received = new String(packet.getData(), 0, packet.getLength());
+                    System.out.println("Date: " + received);                   
                 } catch(SocketTimeoutException e){
+                    System.out.println("Date: " + received); 
                     socket.close();
                 }
-                //System.out.println(Thread.interrupted());
-                String received = new String(packet.getData(), 0, packet.getLength());
-                System.out.println("Date: " + received);
-                /*try {
+                try {
                     Thread.sleep(5000);
                 } catch (InterruptedException ex) {
                     Logger.getLogger(DatagramTimeClient.class.getName()).log(Level.SEVERE, null, ex);
-                }*/
+                }
             }
             
             
